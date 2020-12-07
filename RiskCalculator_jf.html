@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<!--
+    Author: Justin Freiberg
+    Project: Health Insurance Risk Calculator
+-->
+
+<head>
+<meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Health Insurance Risk Calculator 2020</title>
+</head>
+<body style="background-color: rgba(129, 129, 129, 0.637);">
+<h1 style="text-align: center;">Health Insurance Risk Calculator</h1>
+<h1 style="text-align: center;">Freiberg and Sons Insurance</h1>
+<h2 style="text-align: left;"><b>Instructions</b></h2>
+<p style="text-align: left;">
+    This application helps you determine the risk associated with insuring a new customer.
+    The application will ask you for the customer's <br /> body-mass index, 
+    blood pressure, age, and family history of disease. After answering all questions, 
+    the application will give a final risk <br />score as well as the customer's final risk category. 
+</p>
+
+<!--
+Added questions below. 
+-->
+
+<label><b>What is the customer's age?</b></label>
+<select id="q1">
+    <option value="0">18 - 30 years old</option>
+    <option value="10">31 - 45 years old</option>
+    <option value="20">46 - 60 years old</option>
+    <option value="30">61+ years old</option>
+</select>
+
+<br /><br />
+
+<label><b>What is the customer's weight?</b></label>
+<select id="q2">
+    <option value="45">90 lbs - 110 lbs</option>
+    <option value="54">111 lbs  - 130 lbs</option>
+    <option value="64">131 lbs - 150 lbs</option>
+    <option value="73">151 lbs - 170 lbs</option>
+    <option value="82">171 lbs - 190 lbs</option>
+    <option value="91">191 lbs - 210 lbs</option>
+    <option value="100">211 lbs - 230 lbs</option>
+    <option value="109">231 lbs - 250 lbs</option>
+    <option value="118">251 lbs - 270 lbs</option>
+    <option value="127">271 lbs - 290 lbs</option>
+</select>
+<br /><br />
+
+<label><b>What is the customer's height?</b></label>
+<select id="q3">
+    <option value="1.61">4' - 4'3"</option>
+    <option value="1.81">4'4" - 4'6"</option>
+    <option value="2.02">4'7" - 4'9"</option>
+    <option value="2.24">4'10" - 5'</option>
+    <option value="2.48">5'1" - 5'3"</option>
+    <option value="2.72">5'4" - 5'6"</option>
+    <option value="2.98">5'7" - 5'9"</option>
+    <option value="3.34">5'10" - 6'</option>
+    <option value="3.63">6'1" - 6'3"</option>
+    <option value="3.93">6'4" - 6'6"</option>
+    <option value="4.23">6'7" - 6'9"</option>
+    <option value="4.55">6'10" - 7'</option>
+</select>
+
+<br /><br />
+
+<button onclick="calculateBodyMassIndex()">Calculate Body-Mass Index (BMI)</button>
+<p id="BMI"></p>
+
+<label><b>Based on the BMI given above, what range does your customer's BMI fall in?</b></label>
+<select id="q8">
+    <option value="0">10 - 24.9</option>
+    <option value="30">25 - 29.9</option>
+    <option value="75">30+</option>
+</select>
+
+<br /><br />
+
+<label><b>What is the customer's blood pressure?</b></label>
+<select id="q4">
+    <option value="0">Systolic mm Hg  is less than 120 and Diastolic mm Hg  is less than 80</option>
+    <option value="15">Systolic mm Hg  is between 121 - 129 and Diastolic mm Hg  is less than 80</option>
+    <option value="30">Systolic mm Hg  is between 130 - 139 or Diastolic mm Hg  is between 81 - 89</option>
+    <option value="75">Systolic mm Hg  is between 140 - 179 or Diastolic mm Hg  is between 90 - 119</option>
+    <option value="100">Systolic mm Hg  is 180+ or Diastolic mm Hg (lower number) is 120+</option>
+</select>
+
+<br /><br />
+<label><b>Is there family history of diabetes?</b></label>
+<select id="q5">
+    <option value="0">No</option>
+    <option value="10">Yes</option>
+</select>
+
+<br /><br />
+
+<label><b>Is there family history of cancer?</b></label>
+<select id="q6">
+    <option value="0">No</option>
+    <option value="10">Yes</option>
+</select>
+
+<br /><br />
+
+<label><b>Is there family history of Alzheimers?</b></label>
+<select id="q7">
+    <option value="0">No</option>
+    <option value="10">Yes</option>
+</select>
+
+<br /><br />
+
+<button onclick="calculateRiskScore()">Calculate Total Score and Risk Category</button>
+<p id="RiskScore"></p>
+
+<script>
+console.log("Starting Health Insurance Risk Calculator...")
+
+// Added button for Calculating Body-Mass Index
+
+function calculateBodyMassIndex() {
+    console.log("calculateBodyMassIndex()")
+
+    let question2response = document.getElementById("q2").selectedOptions[0].value;
+    let question3response = document.getElementById("q3").selectedOptions[0].value;
+
+    console.log("Question 2 Answer:");
+    console.log(document.getElementById("q2").selectedOptions[0].text);
+    console.log(document.getElementById("q2").selectedOptions[0].value);
+    console.log(question2response);
+
+    console.log("Question 3 Answer:");
+    console.log(document.getElementById("q3").selectedOptions[0].text);
+    console.log(document.getElementById("q3").selectedOptions[0].value);
+    console.log(question3response);
+
+    let bmiValue = question2response/question3response;
+
+    document.getElementById("BMI").innerHTML = "Your body-mass index is " + Math.round(bmiValue)
+}
+// Added button for Calculating Risks Associated with Each Question and Total Risk
+
+function calculateRiskScore() {
+    console.log("calculateRiskScore()")
+
+    let question1response = document.getElementById("q1").selectedOptions[0].value;
+    let question2response = document.getElementById("q2").selectedOptions[0].value;
+    let question3response = document.getElementById("q3").selectedOptions[0].value;
+    let question4response = document.getElementById("q4").selectedOptions[0].value;
+    let question5response = document.getElementById("q5").selectedOptions[0].value;
+    let question6response = document.getElementById("q6").selectedOptions[0].value;
+    let question7response = document.getElementById("q7").selectedOptions[0].value;
+    let question8response = document.getElementById("q8").selectedOptions[0].value;
+
+    let bmiValue = question2response/question3response;
+
+    // Added the Questions with their values to the console
+
+    console.log("Question 1 Answer:");
+    console.log(document.getElementById("q1").selectedOptions[0].text);
+    console.log(document.getElementById("q1").selectedOptions[0].value);
+    console.log(question1response);
+
+    console.log("Question 2 Answer:");
+    console.log(document.getElementById("q2").selectedOptions[0].text);
+    console.log(document.getElementById("q2").selectedOptions[0].value);
+    console.log(question2response);
+
+    console.log("Question 3 Answer:");
+    console.log(document.getElementById("q3").selectedOptions[0].text);
+    console.log(document.getElementById("q3").selectedOptions[0].value);
+    console.log(question3response);
+
+    console.log("Question 4 Answer:");
+    console.log(document.getElementById("q4").selectedOptions[0].text);
+    console.log(document.getElementById("q4").selectedOptions[0].value);
+    console.log(question4response);
+console.log("Question 5 Answer:");
+    console.log(document.getElementById("q5").selectedOptions[0].text);
+    console.log(document.getElementById("q5").selectedOptions[0].value);
+    console.log(question5response);
+
+    console.log("Question 6 Answer:");
+    console.log(document.getElementById("q6").selectedOptions[0].text);
+    console.log(document.getElementById("q6").selectedOptions[0].value);
+    console.log(question6response);
+
+    console.log("Question 7 Answer:");
+    console.log(document.getElementById("q7").selectedOptions[0].text);
+    console.log(document.getElementById("q7").selectedOptions[0].value);
+    console.log(question7response);
+
+    console.log("Question 8 Answer");
+    console.log(document.getElementById("q8").selectedOptions[0].text);
+    console.log(document.getElementById("q8").selectedOptions[0].value);
+    console.log(question8response);
+
+
+    let a = parseInt(question1response);
+    let b = parseInt(question4response);
+    let c = parseInt(question5response);
+    let d = parseInt(question6response);
+    let e = parseInt(question7response);
+    let h = parseInt(question8response);
+    let f = c + d + e;
+    let g = a + b + c + d + e + h;
+
+    // Added Risks and Total Risks so user's could see how the math works
+
+    let question1risk = "The customer's age risk value: " + question1response;
+    let questionr23risk = "The customer's BMI risk value: " + question8response;
+    let question4risk = "The customer's blood pressure risk value: " + question4response;
+    let question567risk = "The customer's family history of disease risk value: " + Math.round(f);
+    let totalRiskScore = "The customer's total risk score: " + Math.round(g);
+// Added Thresholds for the Data to Help the User Better Understand What Thier Risk Value Means
+
+    let categories1 = "This customer has a low risk associated with insuring them! Feel free to insure them without much hesitation.";
+    let categories2 = "This customer has a moderate risk associated with insuring them! We can feel confident insuring them.";
+    let categories3 = "This customer has a high risk associated with insuring them! We can insure them, but continue to be cautious.";
+    let categories4 = "This customer is uninsurable! Unfortunately, it is against our best interests to insure them.";
+
+    if (g > 76) {
+        totalRiskScore += "<br><b>" + categories4 + "</b>"
+    } else if (g > 51) {
+        totalRiskScore += "<br><b>" + categories3 + "</b>"
+    } else if (g > 21) {
+        totalRiskScore += "<br><b>" + categories2 + "</b>"
+    } else {
+        totalRiskScore += "<br><b>" + categories1 + "</b>"
+    }
+
+    document.getElementById("RiskScore").innerHTML = question1risk + "<br>" + questionr23risk + "<br>" + question4risk + "<br>" + question567risk
+     + "<br>" + totalRiskScore;
+}
+</script>
+</body>
+</html>
